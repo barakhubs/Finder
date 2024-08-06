@@ -25,68 +25,93 @@ export default function Login({ status, canResetPassword }) {
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
+            <div className="login-wrapper d-flex align-items-center justify-content-center">
+                {/* Shape */}
+                <div className="login-shape">
+                    <img src="img/core-img/login.png" alt="" />
+                </div>
+                <div className="login-shape2">
+                    <img src="img/core-img/login2.png" alt="" />
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                <div className="container">
+                    {/* Login Text */}
+                    <div className="login-text text-center">
+                        <img className="login-img" src="img/bg-img/12.png" alt="" />
+                        <h3 className="mb-0">Welcome Back!</h3>
+                        {/* Shapes */}
+                        <div className="bg-shapes">
+                            <div className="shape1"></div>
+                            <div className="shape2"></div>
+                            <div className="shape3"></div>
+                            <div className="shape4"></div>
+                            <div className="shape5"></div>
+                            <div className="shape6"></div>
+                            <div className="shape7"></div>
+                            <div className="shape8"></div>
+                        </div>
+                    </div>
 
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
+                    {/* Login Form */}
+                    <div className="register-form mt-5 px-3">
+                        <form onSubmit={submit}>
+                            <div className="form-group text-left mb-4">
+                                <label htmlFor="email">
+                                    <i className="lni lni-user"></i>
+                                </label>
+                                <TextInput
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    value={data.email}
+                                    className="form-control"
+                                    placeholder="Username or email"
+                                    autoComplete="username"
+                                    onChange={(e) => setData('email', e.target.value)}
+                                />
+                                <InputError message={errors.email} className="mt-2" />
+                            </div>
+                            <div className="form-group text-left mb-4">
+                                <label htmlFor="password">
+                                    <i className="lni lni-lock"></i>
+                                </label>
+                                <TextInput
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    value={data.password}
+                                    className="form-control"
+                                    placeholder="Password"
+                                    autoComplete="current-password"
+                                    onChange={(e) => setData('password', e.target.value)}
+                                />
+                                <InputError message={errors.password} className="mt-2" />
+                            </div>
+                            <button className="btn btn-primary btn-lg w-100" disabled={processing}>
+                                Log in
+                            </button>
+                        </form>
+                    </div>
 
-                    <InputError message={errors.password} className="mt-2" />
+                    {/* Login Meta */}
+                    <div className="login-meta-data text-center">
+                        {canResetPassword && (
+                            <Link
+                                href={route('password.request')}
+                                className="forgot-password d-block mt-3 mb-1"
+                            >
+                                Forgot Password?
+                            </Link>
+                        )}
+                        <p className="mb-0">
+                            Didn't have an account?{' '}
+                            <Link href={route('register')} className="ml-2">
+                                Register
+                            </Link>
+                        </p>
+                    </div>
                 </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
-                        />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
+            </div>
         </GuestLayout>
     );
 }

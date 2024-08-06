@@ -1,7 +1,6 @@
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 
 export default function ForgotPassword({ status }) {
@@ -19,32 +18,58 @@ export default function ForgotPassword({ status }) {
         <GuestLayout>
             <Head title="Forgot Password" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email address and we will email you a password
-                reset link that will allow you to choose a new one.
-            </div>
-
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-            <form onSubmit={submit}>
-                <TextInput
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    className="mt-1 block w-full"
-                    isFocused={true}
-                    onChange={(e) => setData('email', e.target.value)}
-                />
-
-                <InputError message={errors.email} className="mt-2" />
-
-                <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Email Password Reset Link
-                    </PrimaryButton>
+            <div className="login-wrapper d-flex align-items-center justify-content-center">
+                {/* Shape */}
+                <div className="login-shape">
+                    <img src="img/core-img/login.png" alt="" />
                 </div>
-            </form>
+                <div className="login-shape2">
+                    <img src="img/core-img/login2.png" alt="" />
+                </div>
+
+                <div className="container">
+                    {/* Login Text */}
+                    <div className="login-text text-center">
+                        <img className="login-img" src="img/bg-img/12.png" alt="" />
+                        <h3 className="mb-0">Forget Password?</h3>
+                        {/* Shapes */}
+                        <div className="bg-shapes">
+                            <div className="shape1"></div>
+                            <div className="shape2"></div>
+                            <div className="shape3"></div>
+                            <div className="shape4"></div>
+                            <div className="shape5"></div>
+                            <div className="shape6"></div>
+                            <div className="shape7"></div>
+                            <div className="shape8"></div>
+                        </div>
+                    </div>
+
+                    {/* Forgot Password Form */}
+                    <div className="register-form mt-5 px-3">
+                        <form onSubmit={submit}>
+                            <div className="form-group text-left mb-4">
+                                <label htmlFor="email">
+                                    <i className="lni lni-user"></i>
+                                </label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    placeholder="Username or email address"
+                                    className="form-control"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                />
+                                <InputError message={errors.email} className="mt-2" />
+                            </div>
+
+                            <button className="btn btn-primary btn-lg w-100" disabled={processing}>
+                                Reset Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </GuestLayout>
     );
 }
