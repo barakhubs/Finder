@@ -12,20 +12,20 @@ export default function BottomNav() {
                             <i className="lni lni-home"></i>
                         </a>
                     </li>
-                    <li className={url === "/dashboard" ? "active" : ""}>
-                        <Link href={route("dashboard")}>
-                            <i className="lni lni-grid-alt"></i>
+                    <li className={url === "/list" ? "active" : ""}>
+                        <Link href={route("clinic.list")}>
+                            <i className="lni lni-sthethoscope"></i>
                         </Link>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i className="lni lni-bolt-alt"></i>
+                    <li className={url === "/dashboard/manager" ? "active" : ""}>
+                        <a href={route("dashboard.manager")}>
+                            <i className="lni lni-grid-alt"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i className="lni lni-bookmark"></i>
-                        </a>
+                    <li className={url === "/dashboard" ? "active" : ""}>
+                        <Link href={route("dashboard")}>
+                            <i className="lni lni-bar-chart"></i>
+                        </Link>
                     </li>
                     <li className={url === "/user" ? "active" : ""}>
                         <Link href={route("user.index")}>

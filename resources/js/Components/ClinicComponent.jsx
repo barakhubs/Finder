@@ -21,12 +21,12 @@ const ClinicComponent = ({ clinic }) => {
                 <a className="post-catagory" alt={clinic.name}>
                     {clinic.category.name}
                 </a>
-                <a className="post-title" href="single.html">
+                <a className="post-title" href="#">
                     {clinic.name}
                 </a>
             </div>
         </div>
     );
-};
+}
 
 export default ClinicComponent;

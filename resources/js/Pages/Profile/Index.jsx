@@ -2,7 +2,8 @@ import { useState } from "react";
 import BottomNav from "@/Components/BottomNav";
 import Header from "@/Components/Header";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { router, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 export default function Index({ auth, cities }) {
     const handleCityDelete = (id) => {
@@ -23,29 +24,33 @@ export default function Index({ auth, cities }) {
         });
     };
 
+    const updatedAt = parseISO(auth.user.updated_at);
+
+    const timeAgo = formatDistanceToNow(updatedAt, { addSuffix: true });
+
     return (
         <AuthenticatedLayout>
             <Header title="Cities" />
             <div className="page-content-wrapper">
-                <div class="container">
-                    <div class="settings-wrapper">
-                        <div class="card settings-card">
-                            <div class="card-body">
-                                <div class="single-settings d-flex align-items-center justify-content-between">
-                                    <div class="title">
-                                        <i class="lni lni-alarm"></i>
+                <div className="container">
+                    <div className="settings-wrapper">
+                        <div className="card settings-card">
+                            <div className="card-body">
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title">
+                                        <i className="lni lni-alarm"></i>
                                         <span>Notifications</span>
                                     </div>
-                                    <div class="data-content">
-                                        <div class="toggle-button-cover">
-                                            <div class="button r">
+                                    <div className="data-content">
+                                        <div className="toggle-button-cover">
+                                            <div className="button r">
                                                 <input
-                                                    class="checkbox"
+                                                    className="checkbox"
                                                     type="checkbox"
                                                     checked
                                                 />
-                                                <div class="knobs"></div>
-                                                <div class="layer"></div>
+                                                <div className="knobs"></div>
+                                                <div className="layer"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -53,23 +58,23 @@ export default function Index({ auth, cities }) {
                             </div>
                         </div>
 
-                        <div class="card settings-card">
-                            <div class="card-body">
-                                <div class="single-settings d-flex align-items-center justify-content-between">
-                                    <div class="title">
-                                        <i class="lni lni-night"></i>
+                        <div className="card settings-card">
+                            <div className="card-body">
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title">
+                                        <i className="lni lni-night"></i>
                                         <span>Night Mode</span>
                                     </div>
-                                    <div class="data-content">
-                                        <div class="toggle-button-cover">
-                                            <div class="button r">
+                                    <div className="data-content">
+                                        <div className="toggle-button-cover">
+                                            <div className="button r">
                                                 <input
-                                                    class="checkbox"
+                                                    className="checkbox"
                                                     id="darkSwitch"
                                                     type="checkbox"
                                                 />
-                                                <div class="knobs"></div>
-                                                <div class="layer"></div>
+                                                <div className="knobs"></div>
+                                                <div className="layer"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -77,56 +82,53 @@ export default function Index({ auth, cities }) {
                             </div>
                         </div>
 
-                        <div class="card settings-card">
-                            <div class="card-body">
-                                <div class="single-settings d-flex align-items-center justify-content-between">
-                                    <div class="title">
-                                        <i class="lni lni-question-circle"></i>
+                        <div className="card settings-card">
+                            <div className="card-body">
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title">
+                                        <i className="lni lni-question-circle"></i>
                                         <span>Support</span>
                                     </div>
-                                    <div class="data-content">
-                                        <a class="pl-4" href="contact.html">
-                                            <i class="lni lni-chevron-right"></i>
+                                    <div className="data-content">
+                                        <a className="pl-4" href="">
+                                            <i className="lni lni-chevron-right"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card settings-card">
-                            <div class="card-body">
-                                <div class="single-settings d-flex align-items-center justify-content-between">
-                                    <div class="title">
-                                        <i class="lni lni-protection"></i>
+                        <div className="card settings-card">
+                            <div className="card-body">
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title">
+                                        <i className="lni lni-protection"></i>
                                         <span>Privacy</span>
                                     </div>
-                                    <div class="data-content">
-                                        <a
-                                            class="pl-4"
-                                            href="#"
-                                        >
-                                            <i class="lni lni-chevron-right"></i>
+                                    <div className="data-content">
+                                        <a className="pl-4" href="#">
+                                            <i className="lni lni-chevron-right"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card settings-card">
-                            <div class="card-body">
-                                <div class="single-settings d-flex align-items-center justify-content-between">
-                                    <div class="title">
-                                        <i class="lni lni-lock"></i>
+                        <div className="card settings-card">
+                            <div className="card-body">
+                                <div className="single-settings d-flex align-items-center justify-content-between">
+                                    <div className="title">
+                                        <i className="lni lni-user"></i>
                                         <span>
-                                            Password
-                                            <span>Updated 15 days ago</span>
+                                            Profile
+                                            <span>(Updated {timeAgo})</span>
                                         </span>
                                     </div>
-                                    <div class="data-content">
-                                        <a href="#">
+                                    <div className="data-content">
+                                        <Link href={route('profile.edit')}>
                                             Change
-                                            <i class="lni lni-chevron-right"></i>
-                                        </a>
+                                            <i className="lni lni-chevron-right"></i>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

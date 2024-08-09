@@ -32,22 +32,7 @@ export default function Dashboard({
         e.preventDefault();
         const { target } = e;
 
-        if (target.tagName === "A" && target.dataset.action) {
-            // Handle the "Disable" or "Enable" button clicks
-            if (target.dataset.action === "disable") {
-                router.visit(route("clinic.disable", clinic.id), {
-                    method: "post",
-                });
-            } else if (target.dataset.action === "enable") {
-                router.visit(route("clinic.enable", clinic.id), {
-                    method: "post",
-                });
-            }
-        } else {
-            // Handle clicks on any other element
-            console.log("Other action performed");
-            // Perform the desired action here
-        }
+        router.visit(route("clinics.show", clinic.id), { method: "get" });
     };
 
     return (
@@ -66,22 +51,14 @@ export default function Dashboard({
                             <i className="lni lni-plus"></i>
                         </a>
                         <div className="dropdown-menu dropdown-menu-right">
-                            <button
-                                className="dropdown-item"
-                                type="button"
-                                onClick={handleClinicClick}
-                            >
-                                <i className="mr-1 lni lni-crop"></i>
-                                Clinics
-                            </button>
-                            {can["admin-only"] && (
+                            {can["admin-only"] ? (
                                 <>
                                     <button
                                         className="dropdown-item"
                                         type="button"
                                         onClick={handleCategoryClick}
                                     >
-                                        <i className="mr-1 lni lni-crop"></i>
+                                        <i className="mr-1 lni lni-layers"></i>
                                         Categories
                                     </button>
                                     <button
@@ -89,10 +66,19 @@ export default function Dashboard({
                                         type="button"
                                         onClick={handleCityClick}
                                     >
-                                        <i className="mr-1 lni lni-cog"></i>
+                                        <i className="mr-1 lni lni-road"></i>
                                         Cities
                                     </button>
                                 </>
+                            ) : (
+                                <button
+                                    className="dropdown-item"
+                                    type="button"
+                                    onClick={handleClinicClick}
+                                >
+                                    <i className="mr-1 lni lni-crop"></i>
+                                    Clinics
+                                </button>
                             )}
                         </div>
                     </div>
@@ -100,8 +86,8 @@ export default function Dashboard({
                     <div className="container">
                         <div className="user-meta-data d-flex align-items-center">
                             <div className="user-content">
-                                <h6>{auth.user.username}</h6>
-                                <p>Admin</p>
+                                <h6>Welcome</h6>
+                                <p>{auth.name}</p>
                                 <br />
                                 <div className="mt-4 user-meta-data d-flex align-items-center justify-content-between">
                                     <p className="mx-1">
@@ -146,8 +132,8 @@ export default function Dashboard({
 
                     <div className="container">
                         {clinics.length > 0 ? (
-                            clinics.map((clinic, index) => (
-                                <ClinicComponent clinic={clinic}/>
+                            clinics.map((clinic) => (
+                                <ClinicComponent key={clinic.id} clinic={clinic} />
                             ))
                         ) : (
                             <p className="text-center">No clinics available</p>

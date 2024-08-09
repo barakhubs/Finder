@@ -4,45 +4,53 @@ import Header from "@/Components/Header";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { router, useForm } from "@inertiajs/react";
 
-export default function Details({ clinic}) {
+export default function Details({ clinic }) {
     const [alert, setAlert] = useState({ show: false, message: "" });
 
     return (
         <AuthenticatedLayout>
-            <Header title={clinic.name} routeName={"dashboard"} />
-            <div class="page-content-wrapper">
+            <Header title={clinic.name} />
+            <div className="page-content-wrapper">
                 <div id="scrollIndicator"></div>
 
-                <div class="single-blog-thumbnail">
+                <div className="single-blog-thumbnail">
                     <img
-                        class="w-100"
+                        className="w-100"
                         src={clinic.image_url || "default-image.jpg"}
                         alt={clinic.name}
                     />
                 </div>
 
-                <div class="single-blog-info">
-                    <div class="container">
-                        <div class="d-flex align-items-center">
-                            <div class="post-like-wrap">
-                                <a class="post-share" href="#">
-                                    <i class="fa fa-map-marker"></i>
+                <div className="single-blog-info">
+                    <div className="container">
+                        <div className="d-flex align-items-center">
+                            <div className="post-like-wrap">
+                                <a className="post-share" href="#">
+                                    <i className="fa fa-map-marker"></i>
                                 </a>
-                                <span class="d-block">{clinic.city.name}</span>
+                                <span className="d-block">
+                                    {clinic.city.name}
+                                </span>
                             </div>
-                            <div class="post-content-wrap">
+                            <div className="post-content-wrap">
                                 <a
-                                    class="post-catagory d-inline-block mb-2"
+                                    className="post-catagory d-inline-block mb-2"
                                     href="#"
                                 >
                                     {clinic.category.name}
                                 </a>
-                                <h5 class="mb-2">{clinic.name}</h5>
-                                <div class="post-meta">
-                                    <a class="post-date" href="single.html#">
+                                <h5 className="mb-2">{clinic.name}</h5>
+                                <div className="post-meta">
+                                    <a
+                                        className="post-date"
+                                        href="single.html#"
+                                    >
                                         {clinic.phone_number}
                                     </a>
-                                    <a class="post-views" href="single.html#">
+                                    <a
+                                        className="post-views"
+                                        href="single.html#"
+                                    >
                                         {clinic.views} Views
                                     </a>
                                 </div>
@@ -51,13 +59,13 @@ export default function Details({ clinic}) {
                     </div>
                 </div>
 
-                <div class="blog-description">
-                    <div class="container">
+                <div className="blog-description">
+                    <div className="container">
                         <p>{clinic.description}</p>
                         <div className="p-2 mt-3">
-                            <div class="card settings-card">
-                                <div class="card-body">
-                                    <div class="single-settings d-flex align-items-center justify-content-between">
+                            <div className="card settings-card">
+                                <div className="card-body">
+                                    <div className="single-settings d-flex align-items-center justify-content-between">
                                         <div className="title">
                                             <a
                                                 href={`https://www.google.com/maps?q=${clinic.latitude},${clinic.longitude}`}
@@ -90,10 +98,10 @@ export default function Details({ clinic}) {
                         </div>
 
                         <div className="p-2 mt-1">
-                            <div class="card settings-card">
-                                <div class="card-body">
-                                    <div class="single-settings d-flex align-items-center justify-content-between">
-                                        <div class="title">
+                            <div className="card settings-card">
+                                <div className="card-body">
+                                    <div className="single-settings d-flex align-items-center justify-content-between">
+                                        <div className="title">
                                             <a
                                                 href={`tel:${clinic.phone_number}`}
                                             >
@@ -102,7 +110,7 @@ export default function Details({ clinic}) {
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="data-content">
+                                        <div className="data-content">
                                             <a
                                                 className="pl-4"
                                                 href={`tel:${clinic.phone_number}`}
@@ -116,15 +124,15 @@ export default function Details({ clinic}) {
                         </div>
 
                         <div className="p-2 mt-1">
-                            <div class="card settings-card">
-                                <div class="card-body">
-                                    <div class="single-settings d-flex align-items-center justify-content-between">
-                                        <div class="title">
+                            <div className="card settings-card">
+                                <div className="card-body">
+                                    <div className="single-settings d-flex align-items-center justify-content-between">
+                                        <div className="title">
                                             <a href={`mailto:${clinic.email}`}>
                                                 <span>{clinic.email}</span>
                                             </a>
                                         </div>
-                                        <div class="data-content">
+                                        <div className="data-content">
                                             <a
                                                 className="pl-4"
                                                 href={`mailto:${clinic.email}`}
@@ -138,10 +146,10 @@ export default function Details({ clinic}) {
                         </div>
 
                         <div className="p-2 mt-1">
-                            <div class="card settings-card">
-                                <div class="card-body">
-                                    <div class="single-settings d-flex align-items-center justify-content-between">
-                                        <div class="title">
+                            <div className="card settings-card">
+                                <div className="card-body">
+                                    <div className="single-settings d-flex align-items-center justify-content-between">
+                                        <div className="title">
                                             <a
                                                 href={
                                                     clinic.website.startsWith(
@@ -163,7 +171,7 @@ export default function Details({ clinic}) {
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="data-content">
+                                        <div className="data-content">
                                             <a
                                                 className="pl-4"
                                                 href={

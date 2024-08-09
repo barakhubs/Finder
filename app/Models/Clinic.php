@@ -41,4 +41,18 @@ class Clinic extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeSearch($query, $searchTerm)
+    {
+        return $query->where('name', 'like', '%' . $searchTerm . '%')
+            ->orWhereHas('category', function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%');
+            })
+            ->orWhereIn('category_id', function($q) use ($searchTerm) {
+                $q->select('id')
+                  ->from('categories')
+                  ->where('name', 'like', '%' . $searchTerm . '%');
+            })
+            ->where('status', 'active');
+    }
 }

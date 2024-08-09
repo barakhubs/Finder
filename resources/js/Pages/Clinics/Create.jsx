@@ -116,7 +116,7 @@ export default function Create({
                     )}
 
                     <div className="container">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} enctype="multipart/form-data">
                             <div className="form-group">
                                 <label htmlFor="name">
                                     Clinic Name{" "}
@@ -196,7 +196,6 @@ export default function Create({
                                         </div>
                                     )}
                                 </div>
-
                             </div>
 
                             <div className="form-group">
@@ -337,7 +336,7 @@ export default function Create({
                                     </div>
                                 )}
                             </div>
-                            <div class="custom-control custom-checkbox mb-3">
+                            <div className="custom-control custom-checkbox mb-3">
                                 <input
                                     id="is_featured"
                                     type="checkbox"
@@ -348,7 +347,7 @@ export default function Create({
                                     }
                                 />
                                 <label
-                                    class="custom-control-label"
+                                    className="custom-control-label"
                                     htmlFor="is_featured"
                                 >
                                     Featured?

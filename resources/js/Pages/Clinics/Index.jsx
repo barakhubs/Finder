@@ -3,6 +3,7 @@ import BottomNav from "@/Components/BottomNav";
 import Header from "@/Components/Header";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { router, useForm } from "@inertiajs/react";
+import ClinicComponent from '@/Components/ClinicComponent';
 
 export default function Index({ auth, clinics, cities = [], categories = [] }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -22,8 +23,6 @@ export default function Index({ auth, clinics, cities = [], categories = [] }) {
         city_id: '',
     });
 
-    console.log(clinics);
-
     const [alert, setAlert] = useState({ show: false, message: '' });
 
 
@@ -31,9 +30,11 @@ export default function Index({ auth, clinics, cities = [], categories = [] }) {
         setAlert({ ...alert, show: false });
     };
 
-    const handleAddNewClinicClick = () => {
+    const handleAddNewClinicClick = (e) => {
+        e.preventDefault();
+        const { target } = e;
         router.visit(route("clinics.create"), {
-            method: "GET",
+            method: "get",
         });
     };
 
@@ -67,24 +68,12 @@ export default function Index({ auth, clinics, cities = [], categories = [] }) {
                     <div className="container">
                         <div className='row'>
                         {clinics.length > 0 ? (
-                            clinics.map((clinic, index) => (
-                                <div className="col-6 col-md-4" key={index}>
-                                    <div className="single-recommended-post mt-3">
-                                        <a className="bookmark-post" href="home.html#">
-                                            <i className="lni lni-bookmark"></i>
-                                        </a>
-                                        <div className="post-thumbnail">
-                                            <img src={clinic.image_url || 'default-image.jpg'} alt={clinic.name} />
-                                        </div>
-                                        <div className="post-content">
-                                            <a className="post-catagory" href="catagory.html">
-                                                {clinic.category.name}
-                                            </a>
-                                            <a className="post-title" href="single.html">
-                                                {clinic.name}
-                                            </a>
-                                        </div>
-                                    </div>
+                            clinics.map((clinic) => (
+                                <div
+                                    className="col-6 col-md-4"
+                                    key={clinic.id}
+                                >
+                                    {/* <ClinicComponent clinic={clinic} /> */}
                                 </div>
                             ))
                         ) : (

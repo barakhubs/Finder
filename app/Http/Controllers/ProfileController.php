@@ -51,6 +51,9 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
+        // Manually delete the user's clinics
+        $user->clinics()->delete();
+
         Auth::logout();
 
         $user->delete();

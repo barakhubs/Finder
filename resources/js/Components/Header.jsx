@@ -1,11 +1,10 @@
 import { Link, router, usePage } from "@inertiajs/react";
 
-export default function Header({ title = ""}) {
-
-    const handleBackButton =(e) => {
+export default function Header({ title = "" }) {
+    const handleBackButton = (e) => {
         e.preventDefault();
         window.history.back();
-    }
+    };
     const { url } = usePage();
     return (
         <div className="header-area" id="headerArea">
@@ -21,15 +20,15 @@ export default function Header({ title = ""}) {
                 </div>
 
                 <div className="search-form">
-                {url === "/user" ? (
-                    <Link method="post" href={route('logout')} as="button">
-                        <i className="fa fa-power-off"></i>
-                    </Link>
-                    ) :
-                    <Link to="search">
+                    {url === "/user" ? (
+                        <Link method="post" href={route("logout")} as="button">
+                            <i className="fa fa-power-off"></i>
+                        </Link>
+                    ) : (
+                        <Link href={route("clinic.list")}>
                             <i className="fa fa-search"></i>
                         </Link>
-                    }
+                    )}
                 </div>
             </div>
         </div>

@@ -17,9 +17,9 @@
 
 <body>
     <!-- Preloader-->
-    <div class="preloader" id="preloader">
-        <div class="spinner-grow text-secondary" role="status">
-            <div class="sr-only">Loading...</div>
+    <div className="preloader" id="preloader">
+        <div className="spinner-grow text-secondary" role="status">
+            <div className="sr-only">Loading...</div>
         </div>
     </div>
 

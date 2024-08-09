@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\City;
@@ -14,10 +15,11 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Dashboard', [
             'randomClinics' => Clinic::with(['city', 'category'])
                 ->inRandomOrder()
                 ->limit(6) // Adjust the limit as needed
+                ->where('status', 'active')
                 ->get()
                 ->map(function ($clinic) {
                     $clinic->image_url = $clinic->image ? asset('storage/' . $clinic->image) : asset('default-image.jpg');
@@ -28,6 +30,7 @@ Route::get('/', function () {
                 ->where('is_featured', true)
                 ->inRandomOrder()
                 ->limit(4) // Adjust the limit as needed
+                ->where('status', 'active')
                 ->get()
                 ->map(function ($clinic) {
                     $clinic->image_url = $clinic->image ? asset('storage/' . $clinic->image) : asset('default-image.jpg');
@@ -37,6 +40,7 @@ Route::get('/', function () {
             'latestClinics' => Clinic::with(['city', 'category'])
                 ->latest()
                 ->limit(4) // Adjust the limit as needed
+                ->where('status', 'active')
                 ->get()
                 ->map(function ($clinic) {
                     $clinic->image_url = $clinic->image ? asset('storage/' . $clinic->image) : asset('default-image.jpg');
@@ -46,11 +50,13 @@ Route::get('/', function () {
             'popularClinics' => Clinic::with(['city', 'category'])
                 ->orderBy('views', 'desc')
                 ->limit(4) // Adjust the limit as needed
+                ->where('status', 'active')
                 ->get()
                 ->map(function ($clinic) {
                     $clinic->image_url = $clinic->image ? asset('storage/' . $clinic->image) : asset('default-image.jpg');
                     return $clinic;
                 }),
+            'auth' => Auth::user()
 
     ]);
 
@@ -70,13 +76,32 @@ Route::get('/dashboard', function () {
         'can' => [
             'admin-only' => Auth::user()->can('admin-only', User::class),
         ],
-        'clinics' => Clinic::with(['city', 'category'])->get()->map(function ($clinic) {
-            $clinic->image_url = $clinic->image ? asset('storage/' . $clinic->image) : asset('default-image.jpg');
-            return $clinic;
-        })
+        'clinics' => Clinic::with(['city', 'category'])
+                ->latest()
+                ->orderBy('status', 'desc')
+                ->get()->map(function ($clinic) {
+                    $clinic->image_url = $clinic->image ? asset('storage/' . $clinic->image) : asset('default-image.jpg');
+                    return $clinic;
+                }),
+        'auth' => Auth::user()
     ]);
 
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'can:admin-only'])->name('dashboard');
+
+Route::get('/dashboard/manager', function () {
+
+    return Inertia::render('User/Manager', [
+        'clinics' => Clinic::with(['city', 'category'])
+                ->where('user_id', auth()->user()->id)
+                ->get()->map(function ($clinic) {
+                    $clinic->image_url = $clinic->image ? asset('storage/' . $clinic->image) : asset('default-image.jpg');
+                    return $clinic;
+                }),
+        'auth' => Auth::user()
+    ]);
+
+})->middleware(['auth', 'verified'])->name('dashboard.manager');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -90,12 +115,19 @@ Route::middleware('auth')->group(function () {
         ->only(['index', 'store', 'destroy']);
 
     Route::resource('clinics', ClinicController::class)
-        ->only(['index', 'create', 'store', 'update', 'show', 'destroy']);
+        ->only(['index', 'create', 'store', 'update', 'destroy']);
 
     Route::post('clinics/{clinic}/enable', [ClinicController::class, 'enable'])->name('clinic.enable');
     Route::post('clinics/{clinic}/disable', [ClinicController::class, 'disable'])->name('clinic.disable');
+    Route::get('clinics/list', [ClinicController::class, 'list'])->name('clinic.list');
 
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
 });
+
+Route::get('clinics/{clinic}', [ClinicController::class, 'show'])->name('clinics.show');
+
+Route::get('/search', [SearchController::class, 'search'])->name('search.post');
+Route::get('/list', [ClinicController::class, 'list'])->name('clinic.list');
+Route::get('/explore', [ClinicController::class, 'explore'])->name('clinic.explore');
 
 require __DIR__ . '/auth.php';

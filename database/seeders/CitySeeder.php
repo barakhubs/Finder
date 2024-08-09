@@ -20,6 +20,10 @@ class CitySeeder extends Seeder
             ['name' => 'Jinja'],
             ['name' => 'Gulu'],
             ['name' => 'Mbarara'],
+            ['name' => 'Fort Portal'],
+            ['name' => 'Mbale'],
+            ['name' => 'Arua'],
+            ['name' => 'Masaka'],
         ];
 
         foreach ($cities as $city) {
