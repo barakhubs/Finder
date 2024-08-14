@@ -18,6 +18,11 @@ export default function Dashboard({ auth }) {
         router.visit(route("register", { method: "get" }));
     };
 
+    const handleDiscoverClick = (e) => {
+        e.preventDefault();
+        router.visit(route("clinic.explore", { method: "get" }));
+    };
+
     const { data, setData, get } = useForm({ query: "" });
 
     const handleSearch = (e) => {
@@ -53,7 +58,7 @@ export default function Dashboard({ auth }) {
                     </div>
 
                     <div className="mt-5">
-                        <button className="btn btn-primary btn-lg w-70">
+                        <button onClick={handleDiscoverClick} className="btn btn-primary btn-lg w-70">
                             DISCOVER CLINICS
                         </button>
                     </div>

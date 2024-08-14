@@ -50,6 +50,7 @@ export default function Explore({ clinics }) {
                     });
                 });
             });
+
         });
 
         // Move the zoom controls to the bottom right
@@ -65,8 +66,8 @@ export default function Explore({ clinics }) {
 
     return (
         <>
-            <Header title="Clinics" />
-            <div id="map" style={{ height: "600px", width: "100%" }}></div>
+            <Header title="Explore Clinics" />
+            <div id="map" style={{ height: "calc(100vh - 60px)" }}></div>
             <BottomNav />
         </>
     );
